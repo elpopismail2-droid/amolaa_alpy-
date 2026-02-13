@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>رسالة ليكي ❤️</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial, sans-serif;
+    text-align:center;
+    background: linear-gradient(135deg,#ff4e50,#fc913a);
+    color:white;
+    overflow:hidden;
+}
+
+#login{
+    background:rgba(0,0,0,0.7);
+    padding:25px;
+    border-radius:15px;
+    max-width:300px;
+    margin:100px auto;
+}
+
+input{
+    padding:10px;
+    width:90%;
+    border:none;
+    border-radius:8px;
+    margin:10px 0;
+}
+
+button{
+    padding:10px 20px;
+    border:none;
+    border-radius:8px;
+    background:#ff4e50;
+    color:white;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#ff2e30;
+}
+
+#main{
+    display:none;
+}
+
+#heart{
+    font-size:100px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+#heart:hover{
+    transform:scale(1.2);
+}
+
+#message{
+    background:white;
+    color:black;
+    padding:20px;
+    border-radius:20px;
+    max-width:600px;
+    margin:20px auto;
+    line-height:1.7;
+    display:none;
+}
+
+.shake{
+    animation: shake 0.5s;
+}
+
+@keyframes shake{
+    0%{transform:translateX(0);}
+    25%{transform:translateX(-10px);}
+    50%{transform:translateX(10px);}
+    75%{transform:translateX(-10px);}
+    100%{transform:translateX(0);}
+}
+
+.floating-heart{
+    position:fixed;
+    bottom:-20px;
+    font-size:24px;
+    animation: floatUp 4s linear forwards;
+}
+
+@keyframes floatUp{
+    to{
+        transform:translateY(-110vh);
+        opacity:0;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- صفحة الباسورد -->
+<div id="login">
+    <h2>ادخل الباسورد</h2>
+    <input type="password" id="password" placeholder="الباسورد">
+    <br>
+    <button onclick="checkPassword()">دخول</button>
+    <p id="error" style="color:red;display:none;">الباسورد غلط!</p>
+</div>
+
+<!-- الصفحة الرئيسية -->
+<div id="main">
+    <h1>زعلان مني لي يا امولتي 🥺</h1>
+    <p>اضغطي على القلب ❤️</p>
+    <div id="heart">❤️</div>
+    <div id="message"></div>
+
+    <audio id="myAudio" loop>
+        <source src="hamaki.mp3" type="audio/mpeg">
+        متصفحك مش يدعم تشغيل الصوت.
+    </audio>
+</div>
+
+<script>
+function checkPassword(){
+    const password = document.getElementById("password").value;
+
+    if(password === "امولتي"){
+        document.getElementById("login").style.display="none";
+        document.getElementById("main").style.display="block";
+    }else{
+        document.getElementById("error").style.display="block";
+    }
+}
+
+const fullMessage = `بص يا امولتي انا عارف اني غلطان حقك عليا
+انا عارف اني مقصر فى حقك الايام دي بس غصب عنى والله مش بمرضايا واتمني تسامحيني ومتزعليش مني
+وانا عارف والله اني غلطت لما سبتك وطلعت او اني سهرت لغيت الساعه 1برا
+بس انا بحبك 😘😍😍🍓 وهفضل احبك حتي لو اي
+وبعدين يا غزال دنتي شريكه عمري يابت دانتي الحته الطريه😘😍
+انا حبيت اقدملك الرساله دي كعذر والله 🥺 واتمني تسامحيني🥺🥺🥺🥺🥺🥺🥺🥺🥺🥺🥺🥺🥺🥺🥺
+b7bek ya bent elginiiiiiaaa😍😍
+خدي بوسه 😗`;
+
+let index = 0;
+const message = document.getElementById("message");
+const heart = document.getElementById("heart");
+const audio = document.getElementById("myAudio");
+
+heart.addEventListener("click",function(){
+
+    document.body.classList.add("shake");
+    setTimeout(()=>{document.body.classList.remove("shake");},500);
+
+    message.style.display="block";
+    message.innerHTML="";
+    index=0;
+    typeWriter();
+
+    audio.volume = 0;
+    audio.play();
+    fadeInAudio();
+
+    for(let i=0;i<10;i++){
+        createHeart();
+    }
+});
+
+function typeWriter(){
+    if(index < fullMessage.length){
+        message.innerHTML += fullMessage.charAt(index);
+        index++;
+        setTimeout(typeWriter,40); // سرعة الكتابة 40ms
+    }
+}
+
+function createHeart(){
+    const h = document.createElement("div");
+    h.className="floating-heart";
+    h.innerHTML="❤️";
+    h.style.left=Math.random()*100+"vw";
+    document.body.appendChild(h);
+    setTimeout(()=>{h.remove();},4000);
+}
+
+function fadeInAudio(){
+    let vol = 0;
+    const interval = setInterval(()=>{
+        if(vol < 1){
+            vol += 0.05;
+            audio.volume = vol;
+        }else{
+            clearInterval(interval);
+        }
+    },200);
+}
+</script>
+
+</body>
+</html>
